@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Pagamentos</title>
+    <h:outputStylesheet library="css" name="styles.css"/>
+    <style>
+        /* Estilos adicionais para tornar o conteúdo centralizado */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px; /* Ajuste a largura máxima conforme necessário */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="container">
+
+        <h:form style="margin-bottom: 10px">
+            <p:menubar>
+
+                <p:menuitem value="Customers" icon="pi pi-fw pi-user" outcome="customer"/>
+                <p:menuitem value="Orders" icon="pi pi-list" outcome="order"/>
+                <p:menuitem value="Payments" icon="pi pi-money-bill" outcome="payment"/>
+            </p:menubar>
+        </h:form>
+
+
+        <h:form id="orderForm" prependId="false">
+
+
+
+
+            <p:fieldset>
+                <legend><strong>Cadastrar um Novo Pagamento</strong></legend>
+                <h:panelGrid columns="2" border="0" layout="grid" style="margin: 20px;">
+                    <p:outputLabel value="Método de pagamento : "/>
+                    <p:inputText id="paymentmethod" value="#{paymentView.payment.paymentmethod}"/>
+                    <p:outputLabel value="Data de pagamento : "/>
+                    <p:inputText id="paymentdate" value="#{paymentView.payment.paymentdate}"/>
+                    <p:outputLabel value="Parcela : "/>
+                    <p:inputText id="parcel" value="#{paymentView.payment.parcel}"/>
+                    <p:outputLabel value="Valor : "/>
+                    <p:inputText id="value" value="#{paymentView.payment.value}"/>
+                </h:panelGrid>
+                <p:commandButton value="Fazer o pagamento" update="paymentList, @form" ajax="false"
+                                 actionListener="#{paymentView.save}"/>
+            </p:fieldset>
+            <br/>
+            <p:fieldset>
+                <legend><strong>Lista de Pedidos</strong></legend>
+                <p:dataTable id="orderList" value="#{orderView.findAll()}" var="order" border="1">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{order.id}"/>
+                    </p:column>
+                    <p:column headerText="Total">
+                        <h:outputText value="#{order.total}"/>
+                    </p:column>
+                    <p:column headerText="Status">
+                        <h:outputText value="#{order.status}"/>
+                    </p:column>
+                    <p:column headerText="Cliente">
+                        <h:outputText value="#{order.customer.name}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+        </h:form>
+    </div>
+</h:body>
+</html>
+

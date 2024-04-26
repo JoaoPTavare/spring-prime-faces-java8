@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Cadastrar Cliente</title>
+    <h:outputStylesheet library="css" name="styles.css"/>
+    <style>
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+
+        <h:form style="margin-bottom: 10px">
+            <p:menubar>
+
+                <p:menuitem value="Customers" icon="pi pi-fw pi-user" outcome="customer"/>
+                <p:menuitem value="Orders" icon="pi pi-list" outcome="order"/>
+                <p:menuitem value="Payments" icon="pi pi-money-bill" outcome="payment"/>
+            </p:menubar>
+        </h:form>
+
+
+        <h:form id="customerForm" prependId="false">
+            <p:fieldset>
+                <legend><strong>Cadastrar um Novo Cliente</strong></legend>
+                <h:panelGrid columns="2" border="0" layout="grid" style="margin: 20px;">
+                    <p:outputLabel value="Nome : "/>
+                    <p:inputText id="name" value="#{customerView.customer.name}" size=""/>
+                    <p:outputLabel value="E-mail : "/>
+                    <p:inputText id="email" value="#{customerView.customer.email}"/>
+                    <p:outputLabel value="Telefone : "/>
+                    <p:inputText id="phone" value="#{customerView.customer.phone}"/>
+                </h:panelGrid>
+                <p:commandButton value="Cadastrar um cliente" update="customerList, @form" ajax="false"
+                                 actionListener="#{customerView.save}"/>
+            </p:fieldset>
+            <br/>
+            <p:fieldset>
+                <legend style="margin-bottom: 10px"><strong>Listagem de clientes</strong></legend>
+                <p:dataTable id="customerList" value="#{customerView.findAll()}" var="customer" border="1">
+                    <p:column headerText="Nome">
+                        <p:link value="#{customer.name}"/>
+                    </p:column>
+                    <p:column headerText="E-mail">
+                        <h:outputText value="#{customer.email}"/>
+                    </p:column>
+                    <p:column headerText="Telefone">
+                        <h:outputText value="#{customer.phone}"/>
+                    </p:column>
+                    <p:column headerText="id">
+                        <h:outputText value="#{customer.id}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+
+
+
+        </h:form>
+
+
+
+        <h:form>
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Pesquise cliente por id:"/>
+                <p:inputText id="customerId" value="#{customerView.customer.id}"/>
+                <p:commandButton value="Buscar" action="#{customerView.findById}" update="customerPanel"/>
+            </p:panelGrid>
+        </h:form>
+        <p:dataTable id="customerList" value="#{customerView.findAll()}" var="customer" border="1">
+
+        </p:dataTable>
+
+        <p:panel id="customerPanel">
+            <p:outputLabel value="ID:"/>
+            <p:inputText id="customerIdOutput" value="#{customerView.customer.id}" />
+        </p:panel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+</h:body>
+
+</html>

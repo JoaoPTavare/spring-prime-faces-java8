@@ -1,0 +1,71 @@
+#customerForm {
+    width: 400px;
+    margin: 0 auto;
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+legend {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+.panelGrid {
+    margin: 20px 0;
+}
+
+.outputLabel {
+    font-weight: bold;
+}
+
+.inputText {
+    width: 100%;
+    align: left;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+#customerList {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+#customerList th, #customerList td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+#customerList th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.customerListTitle {
+    font-family: Arial, sans-serif;
+    padding: 5px;
+    background-color: #3498db;
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.itemsTable {
+    width: 50%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.fixed-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+}

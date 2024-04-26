@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Gerenciamento de Pedidos</title>
+    <h:outputStylesheet library="css" name="styles.css"/>
+    <style>
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .fieldset-wrapper {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h:form id="orderForm" prependId="false">
+            <p:fieldset class="fieldset-wrapper">
+                <legend><strong>Cadastrar um Novo Pedido</strong></legend>
+                <h:panelGrid columns="2" border="0" layout="grid" style="margin: 20px;">
+                    <p:outputLabel value="Total : "/>
+                    <p:inputText id="total" value="#{orderView.order.total}" size=""/>
+                    <p:outputLabel value="Status : "/>
+                    <p:inputText id="status" value="#{orderView.order.status}"/>
+                    <p:outputLabel value="Cliente : "/>
+                    <p:selectOneMenu value="#{orderView.customer}" converter="#{customerConverter}">
+                        <f:selectItems value="#{customerView.findAll()}" var="customer"
+                                       itemValue="#{customer.id}" itemLabel="#{customer.name}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Produtos : "/>
+                </h:panelGrid>
+
+                <p:fieldset style="margin-left: 20px;">
+                    <legend><strong>Adicionar Produto</strong></legend>
+                    <h:panelGrid columns="2" border="0" layout="grid" style="margin: 20px;">
+                        <p:outputLabel value="Produto : "/>
+                        <p:inputText id="product" value="#{orderView.item.product}" size=""/>
+                        <p:outputLabel value="Preço : "/>
+                        <p:inputText id="price" value="#{orderView.item.price}" type="number"/>
+                        <p:outputLabel value="Quantidade : "/>
+                        <p:inputText id="quantity" value="#{orderView.item.quantity}" type="number"/>
+                        <p:commandButton value="Limpar" actionListener="#{orderView.resetItem}"
+                                         update="itemsTable" style="margin-top: 10px;"/>
+                        <p:commandButton value="Adicionar" actionListener="#{orderView.addItem}"
+                                         update="itemsTable" style="margin-top: 10px; float: right;"/>
+                    </h:panelGrid>
+                    <p:dataTable id="itemsTable" value="#{orderView.items}" var="item">
+                        <p:column headerText="Produto">
+                            <h:outputText value="#{item.product}"/>
+                        </p:column>
+                        <p:column headerText="Quantidade">
+                            <h:outputText value="#{item.quantity}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:fieldset>
+
+                <p:commandButton value="Cadastrar um Pedido" update="orderList, @form" ajax="false"
+                                 actionListener="#{orderView.save}" style="margin-top: 10px;"/>
+            </p:fieldset>
+
+            <p:fieldset class="fieldset-wrapper">
+                <legend><strong>Listagem de Pedidos</strong></legend>
+                <p:dataTable id="orderList" value="#{orderView.findAll()}" var="order" border="1">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{order.id}"/>
+                    </p:column>
+                    <p:column headerText="Total">
+                        <h:outputText value="#{order.total}"/>
+                    </p:column>
+                    <p:column headerText="Status">
+                        <h:outputText value="#{order.status}"/>
+                    </p:column>
+                    <p:column headerText="Cliente">
+                        <h:outputText value="#{order.customer.name}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+        </h:form>
+    </div>
+</h:body>
+
+</html>
